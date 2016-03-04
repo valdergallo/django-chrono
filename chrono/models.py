@@ -17,9 +17,16 @@ class _ChronoTime(models.Model):
         return self.time
 
 
+class ChronoDateTimeManager(models.Manager):
+    def get_queryset(self):
+        return super(ChronoDateTimeManager, self).get_queryset().select_related('chrono_date', 'chrono_time')
+
+
 class ChronoDateTime(models.Model):
-    chrono_date = models.ForeignKey(_ChronoDate)
-    chrono_time = models.ForeignKey(_ChronoTime)
+    chrono_date = models.ForeignKey(_ChronoDate, related_name='chrono_date')
+    chrono_time = models.ForeignKey(_ChronoTime, related_name='chrono_time')
+
+    objects = ChronoDateTimeManager
 
     @staticmethod
     def convert_chrono_datetime(datetime_instance):
