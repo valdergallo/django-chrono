@@ -52,8 +52,8 @@ class ChronoDateTime(models.Model):
         chrono, _ = cls.objects.get_or_create(chrono_date=_date, chrono_time=_time)
         return chrono
 
-    def __repr__(self):
-        return "%s" % datetime.combine(self.chrono_date.date, self.chrono_time.time)
+    def __str__(self):
+        return '%s' % self.to_datetime()
 
-    def datetime(self):
+    def to_datetime(self):
         return datetime.combine(self.chrono_date.date, self.chrono_time.time)
